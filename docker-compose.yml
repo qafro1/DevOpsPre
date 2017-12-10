@@ -1,0 +1,27 @@
+version: '2'
+services:
+  web:
+    image: nginx
+    container_name: nginx
+    volumes:
+       - "/etc/nginx/conf.d"
+       - "/etc/nginx/vhost.d"
+       - "/usr/share/nginx/html"
+       - "./etc/ssl:/etc/ssl"
+    ports:
+      - "5000:80"
+    command: [nginx-debug, '-g', 'daemon off;']
+    links:
+      - db
+  db:
+    image: postgres
+    container_name: db1
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgres
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 5001:8080

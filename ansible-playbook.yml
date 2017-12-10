@@ -1,0 +1,19 @@
+- ec2:
+    key_name: mykey
+    group: webserver
+    instance_type: t2.micro
+    image: ami-6e649707
+    wait: yes
+    wait_timeout: 500
+    count: 1
+    # Create a simple s3 bucket
+    - s3_bucket:
+    name: mys3bucket
+    volumes:
+      - device_name: /dev/xvda
+        volume_type: gp2
+        volume_size: 8
+
+    monitoring: yes
+    vpc_subnet_id: subnet-29e63245
+    assign_public_ip: yes
